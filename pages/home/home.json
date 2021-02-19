@@ -1,0 +1,9 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#eb4450",
+  "navigationBarTitleText": "黑马优购",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "SearchInput":"../../components/SearchInput/SearchInput"
+  }
+}
