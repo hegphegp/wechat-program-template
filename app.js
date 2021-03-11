@@ -1,18 +1,14 @@
 // app.js
-App({
-  onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+var http = require("request/request.js");
 
+App({
+  onLaunch:async function() {
+    const test = await http.get('/test-test/v1/test/test-get')
+    console.log(test)
+    const a = await this.login();
+    console.log('0989999999999999999999999')
     // 登录
-    wx.login({
-      success: res => {
-        console.log(res)
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -38,5 +34,16 @@ App({
   },
   globalData: {
     userInfo: null
+  },
+  login() {
+   wx.login({
+      success: res => {
+        console.log('000')
+        console.log(res)
+
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      }
+    })
   }
 })
+
