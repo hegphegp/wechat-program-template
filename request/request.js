@@ -4,17 +4,14 @@ const combineUrl = (url, params = {}) => {
     if (url != null && url != 'undefined' && url != "") {
         Object.keys(params).forEach((key, index) => {
             var value = params[key];
-            value = encodeURIComponent(value);
+            value = encodeURIComponent(value); // 数组变量时，主动编码成正确格式，springmvc可以直接接收
             var reg = new RegExp("(^|)" + key + "=([^&]*)(|$)");
             var tmp = key + "=" + value;
             if (url.match(reg) != null) {
                 url = url.replace(eval(reg), tmp);
             } else {
-                if (url.match("[\?]")) {
-                    url = url + "&" + tmp;
-                } else {
-                    url = url + "?" + tmp;
-                }
+                var combine = url.match("[\?]")? "&":"?";
+                url = url + combine + tmp;
             }
         });
     }
@@ -23,29 +20,24 @@ const combineUrl = (url, params = {}) => {
 
 const request = (url, options) => {
   return new Promise((resolve, reject) => {
+    /**
     const param = {
         "urlParams":{
             "field01": "field01",
-            "field02": "field02",
-            "field03": "field03",
             "field04": ["field03", "aaaa"],
-        },
-        "bodyParams":{
+        }, "bodyParams":{
             "field01": "field01",
-            "field02": "field02",
-            "field03": "field03"
+            "field02": "field02"
         }
     }
-    url = 'http://www.baidu.com/aa?'
-    url = combineUrl(url, param.urlParams);
-    console.log(url)
+    */
+    url = `http://10.36.71.183:8088${url}`
+    url = combineUrl(url, options.urlParams);
 
     wx.request({
 //    url: `${app.globalData.host}${url}`,
-      url: `http://10.36.71.183:8088${url}`,
+      url: url,
       method: options.method,
-      urlParams: options.urlParams,
-      bodyParams: options.bodyParams,
       data: options.method === 'GET' ? '' : JSON.stringify(options.data),
       header: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -56,14 +48,8 @@ const request = (url, options) => {
         if (request.statusCode === 200 && request.data.code === 200) {
             resolve(request.data)
         }
-//          console.log(request.data+"00000000000")
-//          resolve(request.data)
-//        } else {
-//           reject(request.data)
-//        }
       },
       fail(error) {
-        console.log('000000000000000-------------------')
         reject(error.data)
       }
     })
@@ -71,7 +57,6 @@ const request = (url, options) => {
 }
 
 const get = (url, options = {}) => {
-  
   return request(url, { method: 'GET', data: options })
 }
 
