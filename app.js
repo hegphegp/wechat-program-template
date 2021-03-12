@@ -1,12 +1,12 @@
 // app.js
 var http = require("request/request.js");
+var user = require("utils/user.js");
 
 App({
   onLaunch:async function() {
     const test = await http.get('/test-test/v1/test/test-get')
-    console.log(test)
-    const a = await this.login();
-    console.log('0989999999999999999999999')
+    // const b = await user.wxLogin();
+    // console.log(b.code)
     // 登录
     
     // 获取用户信息
@@ -28,22 +28,14 @@ App({
               }
             }
           })
+        } else {
+
         }
       }
     })
   },
   globalData: {
     userInfo: null
-  },
-  login() {
-   wx.login({
-      success: res => {
-        console.log('000')
-        console.log(res)
-
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
   }
 })
 

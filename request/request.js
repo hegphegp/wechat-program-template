@@ -44,7 +44,6 @@ const request = (url, options) => {
         'x-token': 'x-token'  // 看自己是否需要
       },
       success(request) {
-        console.log(request.statusCode)
         if (request.statusCode === 200 && request.data.code === 200) {
             resolve(request.data)
         }
