@@ -1,4 +1,5 @@
 // const app = getApp()
+var storage = require("../utils/storageUtils.js");
 
 const combineUrl = (url, params = {}) => {
     if (url != null && url != 'undefined' && url != "") {
@@ -23,8 +24,11 @@ const request = (url, options) => {
     let checkToken = options.checkToken;
     checkToken = (checkToken===null || checkToken===undefined)? true:checkToken; // 默认不传会校验token
     if (checkToken===true) {
-      console.log('0000-----------000000000000')
-      // 校验token是否存在
+      const token = storage.getStorage('token');
+      if(token===null || token===undefined) {
+        // 执行一个wx.login()获取授权码code，然后通过appId，appSecret，code获取微信用户信息，然后自己开发的后台再生成一个token
+
+      }
     }
     url = combineUrl(url, options.urlParams);
     url = `http://10.36.71.183:8088${url}`

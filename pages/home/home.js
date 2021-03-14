@@ -22,16 +22,30 @@ Page({
     console.log('先知行')
   },
   test1() {
+//    interface RequestOption {
+//      url: string
+//      complete?: RequestCompleteCallback   /** 接口调用结束的回调函数（调用成功、失败都会执行） */
+//      data?: string | IAnyObject | ArrayBuffer
+//      dataType?: 'json' | '其他' /** 返回的数据格式 取值json: 会对返回的数据进行一次 JSON.parse; 取值 其他: 不对返回的内容进行 JSON.parse;*/
+//      enableHttp2?: boolean /* 开启 http2 最低基础库： `2.10.4` */
+//      enableQuic?: boolean  /* 开启 quic最低基础库： `2.10.4` */
+//      fail?: RequestFailCallback  /** 接口调用失败的回调函数 */
+//      header?: IAnyObject  /* 设置请求的 header，header 中不能设置 Referer。`content-type` 默认为 `application/json` */
+//      method?: 'GET'
+//      success?: RequestSuccessCallback /** 接口调用成功的回调函数 */
+//      timeout?: number /* 超时时间，单位为毫秒。最低基础库： `2.10.0` */
+//  }
     return new Promise((resolve,reject)=>{
       const params = {
         'username': 'username',
-        'password': 'password'
+        'password': 'password',
+        'id': ['aaa','bbb']
       }
       //request.request()
       wx.request({
         data: params,
-        method: 'POST',
-        url:'http://192.168.1.110:8080/v1/login',
+        method: 'GET',
+        url:'http://192.168.1.110:8080/v1/login?000=000',
         success:(result)=>{
           console.log(result.data)
           resolve(result.data);
