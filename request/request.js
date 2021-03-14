@@ -20,25 +20,22 @@ const combineUrl = (url, params = {}) => {
 
 const request = (url, options) => {
   return new Promise((resolve, reject) => {
-    /**
-    const param = {
-        "urlParams":{
-            "field01": "field01",
-            "field04": ["field03", "aaaa"],
-        }, "bodyParams":{
-            "field01": "field01",
-            "field02": "field02"
-        }
+    let checkToken = options.checkToken;
+    checkToken = (checkToken===null || checkToken===undefined)? true:checkToken; // 默认不传会校验token
+    if (checkToken===true) {
+      console.log('0000-----------000000000000')
+      // 校验token是否存在
     }
-    */
-    url = `http://10.36.71.183:8088${url}`
     url = combineUrl(url, options.urlParams);
-
+    url = `http://10.36.71.183:8088${url}`
+    let bodyParams = options.bodyParams;
+    options.bodyParams = (bodyParams===null || bodyParams===undefined)? {}:bodyParams;
+    
     wx.request({
 //    url: `${app.globalData.host}${url}`,
       url: url,
       method: options.method,
-      data: options.method === 'GET' ? '' : JSON.stringify(options.data),
+      data: options.method === 'GET' ? '' : JSON.stringify(options.bodyParams),
       header: {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-token': 'x-token'  // 看自己是否需要
