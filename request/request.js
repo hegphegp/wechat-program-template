@@ -26,7 +26,8 @@ const request = (url, method, options, checkToken) => {
       const token = storage.getStorage('token');
       if (token===null || token===undefined) {
         // 执行一个wx.login()获取授权码code，然后通过appId，appSecret，code获取微信用户信息，然后自己开发的后台再生成一个token
-
+        storage.setStorage('aaa', 'aaaa');
+        storage.setStorage('bbb', 'bbb', 10000)
       }
     }
     url = combineUrl(url, options.urlParams);
