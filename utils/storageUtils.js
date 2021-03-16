@@ -1,7 +1,7 @@
 const keyPrefix = 'aaaa:';
 
 const setStorage = (key, data) => {
-  setStorageTime(key, data, null);
+  setStorageTime(key, data);
 }
 
 const setStorageTime = (key, data, expireMilliseconds) => {

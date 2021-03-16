@@ -19,13 +19,12 @@ const combineUrl = (url, params = {}) => {
     return url;
 }
 
-const request = (url, options) => {
+const request = (url, method, options, checkToken) => {
   return new Promise((resolve, reject) => {
-    let checkToken = options.checkToken;
     checkToken = (checkToken===null || checkToken===undefined)? true:checkToken; // 默认不传会校验token
     if (checkToken===true) {
       const token = storage.getStorage('token');
-      if(token===null || token===undefined) {
+      if (token===null || token===undefined) {
         // 执行一个wx.login()获取授权码code，然后通过appId，appSecret，code获取微信用户信息，然后自己开发的后台再生成一个token
 
       }
@@ -38,8 +37,8 @@ const request = (url, options) => {
     wx.request({
 //    url: `${app.globalData.host}${url}`,
       url: url,
-      method: options.method,
-      data: options.method === 'GET' ? '' : JSON.stringify(options.bodyParams),
+      method: method,
+      data: method === 'GET' ? '' : JSON.stringify(options.bodyParams),
       header: {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-token': 'x-token'  // 看自己是否需要
@@ -56,21 +55,31 @@ const request = (url, options) => {
   })
 }
 
-const get = (url, options = {}) => {
-  return request(url, { method: 'GET', data: options })
+/**
+ * options的取值格式 
+ * {
+ *     "urlParams": {
+ *     },
+ *     "bodyParams": {
+ *     },
+ *     "checkToken": true
+ * }
+ */
+const get = (url, options = {}, checkToken = true) => {
+  return request(url, 'GET',  options, checkToken)
 }
 
-const post = (url, options = {}) => {
-   return request(url, { method: 'POST', data: options })
+const post = (url, options = {}, checkToken = true) => {
+   return request(url, 'POST', options, checkToken)
 }
 
-const put = (url, options = {}) => {
-   return request(url, { method: 'PUT', data: options })
+const put = (url, options = {}, checkToken = true) => {
+   return request(url, 'PUT', options, checkToken)
 }
 
 // 不能声明DELETE（关键字）
-const remove = (url, options = {}) => {
-   return request(url, { method: 'DELETE', data: options })
+const remove = (url, options = {}, checkToken = true) => {
+   return request(url, 'DELETE', options, checkToken)
 }
 
 module.exports = {

@@ -1,10 +1,13 @@
 // app.js
 var http = require("request/request.js");
 var user = require("utils/user.js");
+var storage = require("utils/storageUtils.js");
 
 App({
   onLaunch:async function() {
+    storage.setStorage('00', '000')
     const test = await http.get('/test-test/v1/test/test-get')
+    
     // const b = await user.wxLogin();
     // console.log(b.code)
     // 登录
