@@ -6,8 +6,13 @@ var storage = require("utils/storageUtils.js");
 App({
   onLaunch:async function() {
     storage.setStorage('00', '000')
-    const test = await http.get('/test-test/v1/test/test-get')
+    // const test = await http.get('/test-test/v1/test/test-get')
+    const wxLogin = await user.wxLogin();
+    // https://api.weixin.qq.com/sns/jscode2session?appid=appid&secret=secret&js_code=013VCh000jVBqL1Td2100WM0hy3VCh01&grant_type=authorization_code
+    var url = 'https://api.weixin.qq.com/sns/jscode2session?appid=appid&secret=secret&js_code=' + wxLogin.code + '&grant_type=authorization_code';
+    // const userData = await http.get(url, {}, false)
     
+    // console.log(userData)
     // const b = await user.wxLogin();
     // console.log(b.code)
     // 登录
@@ -15,7 +20,7 @@ App({
     // 获取用户信息
     wx.getSetting({
       success: res => {
-        console.log(res)
+        console.log('wx.getSetting===>>>'+JSON.stringify(res))
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({

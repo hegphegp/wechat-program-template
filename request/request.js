@@ -30,11 +30,15 @@ const request = (url, method, options, checkToken) => {
         storage.setStorage('bbb', 'bbb', 10000)
       }
     }
+
     url = combineUrl(url, options.urlParams);
-    url = `http://10.36.71.183:8088${url}`
+    var fdStart = url.indexOf('http');
+    if (fdStart == -1) {
+      url = `http://10.36.71.183:8088${url}`
+    }
+    
     let bodyParams = options.bodyParams;
     options.bodyParams = (bodyParams===null || bodyParams===undefined)? {}:bodyParams;
-    
     wx.request({
 //    url: `${app.globalData.host}${url}`,
       url: url,
@@ -45,11 +49,13 @@ const request = (url, method, options, checkToken) => {
         'x-token': 'x-token'  // 看自己是否需要
       },
       success(request) {
+        console.log(request.data)
         if (request.statusCode === 200 && request.data.code === 200) {
             resolve(request.data)
         }
       },
       fail(error) {
+        console.log(error)
         reject(error.data)
       }
     })
